@@ -25,19 +25,6 @@ function App() {
         }
         getData();
     }, []);
-    
-    const onSubmit = (e) => {
-      e.preventDefault();
-      
-      const db = firebase.firestore();
-      db.collection('todos')
-          .add({
-              title
-          })
-          .then(() => {
-              setTitle('')
-          })
-  }
   
   return (
     <Router>
