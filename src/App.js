@@ -1,69 +1,57 @@
-import React, { Component }  from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import firebase from './config/firebase.config';
 import Header from './components/layout/Headers';
-import Todos from './components/todos/Todos';
 import AddTodo from './components/todos/AddTodo';
-import uuid from 'react-uuid';
+import TodoDelete from '../src/components/todos/TodoDelete';
 
 import './App.css';
 
-class App extends Component {
-  state = {
-    todos: [
-      {
-        id: uuid(),
-        title: 'Take out the trash',
-        completed: false
-      },
-      {
-        id: uuid(),
-        title: 'Dinner with wife',
-        completed: false
-      },
-      {
-        id: uuid(),
-        title: 'Meeting with boss',
-        completed: false
-      }
-    ]
-  }
-  
-  // Toggle complete
-  markComplete = (id) => {
-    this.setState({ todos: this.state.todos.map(todo => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed
-      }
-      return todo;
+function App() {
+  const [todos, setTodos] = useState([]);
+  const [title, setTitle] = useState('');
+        
+    useEffect(() => {
+        const getData = () => {
+            const db = firebase.firestore();
+            db.collection('todos')
+                .onSnapshot((snapShot) => {
+                    const newTodos = snapShot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                    setTodos(newTodos)
+                })
+        }
+        getData();
+    }, []);
+    
+    const onSubmit = (e) => {
+      e.preventDefault();
       
-    }) });
+      const db = firebase.firestore();
+      db.collection('todos')
+          .add({
+              title
+          })
+          .then(() => {
+              setTitle('')
+          })
   }
   
-  // Delete Todo
-  deleteTodo = (id) => {
-    this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] })
-  }
-  
-  // Add Todo
-  addTodo = (title) => {
-    const newTodo = {
-      id: uuid(),
-      title,
-      completed: false
-    }
-    this.setState({ todos: [...this.state.todos, newTodo] });
-  }
-  
-  render() {
-    return (
+  return (
+    <Router>
       <div className="App">
-        <div className='container'>
         <Header />
-        <AddTodo addTodo={ this.addTodo } />
-        <Todos todos={ this.state.todos } markComplete={ this.markComplete } deleteTodo={ this.deleteTodo } />
+        <AddTodo />
+        <div className='container'>
+            {todos.map((todo) => 
+                    <TodoDelete todo={todo} />
+            )}
         </div>
       </div>
-    );
-  }
+    </Router>
+  );
 }
 
 export default App;
