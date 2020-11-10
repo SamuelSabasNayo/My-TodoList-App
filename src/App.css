@@ -13,20 +13,30 @@ a {
   color: #333;
   text-decoration: none;
 }
-
+.App {
+  background: #f4f4f4;
+  /* margin: 10px; */
+}
 .container {
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
+  margin-left: 8px;
 }
 
 .btn {
+  margin: 5px;
   display: inline-block;
   border: none;
-  background: #555;
+  background: #e8491d;
   color: #fff;
   padding: 7px 20px;
   cursor: pointer;
 }
 
-.btn:hover {
-  background: #666;
+.btn:active {
+  opacity: 0.9;
+}
+
+.todo-items {
+  display: flex;
+  border-bottom: 1px dotted #ccc;
 }
