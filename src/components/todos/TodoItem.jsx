@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../../config/firebase.config';
-import { BrowserRouter as Router } from 'react-router-dom';
 import TodoDelete from './TodoDelete';
 
-const TodoItem = (todo) => {
+const TodoItem = () => {
     const [todos, setTodos] = useState([]);
-        
+    
     useEffect(() => {
         const getData = () => {
             const db = firebase.firestore();
@@ -17,29 +16,68 @@ const TodoItem = (todo) => {
                     }))
                     setTodos(newTodos)
                 })
-                }
+        }
         getData();
     }, []);
     
-    const onDelete = () => {
-        const db = firebase.firestore();
-        db.collection('todos').doc(todo.id).delete();
-        console.log('hello sam')
-    }
-    
     return (
         <div className='container'>
-            {todos.map((todo) => 
-                <div className='todo-items'>
-                    <TodoDelete todo={todo} />
-                </div>
-            )}
+        {todos.map((todo) => 
+                <TodoDelete todo={todo} />
+        )}
         </div>
     )
-    
 }
 
 export default TodoItem;
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import firebase from '../../config/firebase.config';
+// import { BrowserRouter as Router } from 'react-router-dom';
+// import TodoDelete from './TodoDelete';
+
+// const TodoItem = (todo) => {
+//     const [todos, setTodos] = useState([]);
+        
+//     useEffect(() => {
+//         const getData = () => {
+//             const db = firebase.firestore();
+//             db.collection('todos')
+//                 .onSnapshot((snapShot) => {
+//                     const newTodos = snapShot.docs.map((doc) => ({
+//                         id: doc.id,
+//                         ...doc.data()
+//                     }))
+//                     setTodos(newTodos)
+//                 })
+//                 }
+//         getData();
+//     }, []);
+    
+//     const onDelete = () => {
+//         const db = firebase.firestore();
+//         db.collection('todos').doc(todo.id).delete();
+//         console.log('hello sam')
+//     }
+    
+//     return (
+//         <div className='container'>
+//             {todos.map((todo) => 
+//                 <div className='todo-items'>
+//                     <TodoDelete todo={todo} />
+//                 </div>
+//             )}
+//         </div>
+//     )
+    
+// }
+
+// export default TodoItem;
 
 
 

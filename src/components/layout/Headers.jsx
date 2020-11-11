@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
-        <header style={ headerStyle }>
-            <h1>TodoList</h1>
-            <Link to='/' style={linkStyle}>Home</Link> | <Link to='/about' style={linkStyle}>About</Link>
-        </header>
+        <React.Fragment>
+            <header style={ headerStyle }>
+                <h1>TodoList App</h1>
+                {/* <Logout /> */}
+            </header>
+        </React.Fragment>
     )
 }
 

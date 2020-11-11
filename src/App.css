@@ -37,6 +37,7 @@ a {
 }
 
 .todo-items {
+  margin: 5px 0px;
   display: flex;
   border-bottom: 1px dotted #ccc;
 }
