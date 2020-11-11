@@ -1,12 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
         <React.Fragment>
             <header style={ headerStyle }>
                 <h1>TodoList App</h1>
-                {/* <Logout /> */}
             </header>
         </React.Fragment>
     )
