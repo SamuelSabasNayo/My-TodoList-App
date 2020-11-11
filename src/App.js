@@ -1,41 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import firebase from './config/firebase.config';
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/layout/Headers';
-import AddTodo from './components/todos/AddTodo';
-import TodoDelete from '../src/components/todos/TodoDelete';
+import Home from '../src/components/auth/Home';
+import Login from '../src/components/auth/Login';
+import Signup from '../src/components/auth/Signup';
 
 import './App.css';
 
-function App() {
-  const [todos, setTodos] = useState([]);
-  const [title, setTitle] = useState('');
-        
-    useEffect(() => {
-        const getData = () => {
-            const db = firebase.firestore();
-            db.collection('todos')
-                .onSnapshot((snapShot) => {
-                    const newTodos = snapShot.docs.map((doc) => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }))
-                    setTodos(newTodos)
-                })
-        }
-        getData();
-    }, []);
-  
+const App = () => {
   return (
     <Router>
       <div className="App">
         <Header />
-        <AddTodo />
-        <div className='container'>
-            {todos.map((todo) => 
-                    <TodoDelete todo={todo} />
-            )}
-        </div>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/signup' component={Signup} />
+        <Route exact path='/login' component={Login} />
       </div>
     </Router>
   );
