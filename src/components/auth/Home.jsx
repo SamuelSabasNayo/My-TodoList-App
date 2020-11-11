@@ -8,7 +8,10 @@ import AddTodo from '../todos/AddTodo';
 const Home = () => {
     return  (
         <React.Fragment>
-            <div style={{margin: '0'}}>
+            <div style={{
+                margin: '0', 
+                background: '#f4f4f4'
+            }}>
                 <Logout />
                 <AddTodo />
                 <TodoItem/>

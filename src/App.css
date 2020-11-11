@@ -14,7 +14,7 @@ a {
   text-decoration: none;
 }
 .App {
-  background: #f4f4f4;
+  background: #fff;
   /* margin: 10px; */
 }
 .container {
@@ -38,6 +38,24 @@ a {
 
 .todo-items {
   margin: 5px 0px;
+  background: #f4f4f4;
   display: flex;
   border-bottom: 1px dotted #ccc;
+}
+
+.userForm {
+  margin: auto;
+  width: fit-content;
+  background: #ffffff;
+  border: 2px solid #a7b5be;
+  padding: 50px;
+}
+label {
+  color: #78472C;
+}
+
+.signupInput {
+  width: 300px;
+  border: 2px solid #a7b5be;
+  padding: 10px;
 }
