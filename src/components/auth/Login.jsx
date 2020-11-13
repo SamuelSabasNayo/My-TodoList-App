@@ -1,8 +1,10 @@
 import React, { useCallback, useContext } from 'react';
-import { withRouter, Redirect } from 'react-router';
+import { withRouter } from 'react-router';
 import firebase from '../../config/firebase.config';
 import { Link } from 'react-router-dom';
 import { AuthContext } from './Auth';
+
+import Toaster from '../../components/pages/Toaster';
 
 const Login = ({history}) => {
     const handleLogin = useCallback(
@@ -12,21 +14,24 @@ const Login = ({history}) => {
             
             try {
                 await firebase
-                    .auth()
-                    .signInWithEmailAndPassword(email.value, password.value);
-                history.push('/');
+                .auth()
+                .signInWithEmailAndPassword(email.value, password.value)
+                    .then(() => {
+                        Toaster('success', 'Logged-in successfully!');
+                    setTimeout(() => {
+                        console.log('success', 'Signed-up successfully!');
+                        history.push('/');
+                    }, 3000);
+                });
             } catch (error) {
-                alert(error);
+                Toaster('error', error.message);
+                console.log('error', error.message);
             }
         },
         [history]
     );
     
     const currentUser = useContext(AuthContext);
-    
-    if (currentUser) {
-        return <Redirect to='/' />;
-    }
     
     return (
         <React.Fragment>

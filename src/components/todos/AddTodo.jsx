@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import firebase from '../../config/firebase.config';
 
+import Toaster from '../../components/pages/Toaster';
+
 const AddTodo = ({todo}) => {
     const [title, setTitle] = useState('');
     const onSubmit = (e) => {
         e.preventDefault();
         const myUser = firebase.auth().currentUser;
         const authorEmail = myUser.email;
-        // console.log(authorEmail)
         
         if (title === '') {
-            alert('Please! Add Todo.');
+            Toaster('error', 'Please! Add Todo.');
         } else {
+            Toaster('success', 'Added Todo!');
             const db = firebase.firestore();
             db.collection('todos')
                 .add({
